@@ -22,12 +22,12 @@ namespace RPSLS_WPF
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        string[] Elements = { "Rock", "Paper", "Scissors", "Lizard", "Spock" };
+        string[] Elements = { "Rock", "Paper", "Scissors", "Lizard", "Spock" , ""};
         int _playerWins = 0;
         int _computerWins = 0;
         int _tieGames = 0;
-        int _playerSelection = 0;
-        int _computerSelection = 0;
+        int _playerSelection = 5;
+        int _computerSelection = 5;
         string _result = "";
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -178,7 +178,7 @@ namespace RPSLS_WPF
                     Win("Rock smashes scissors.");
                     break;
                 case 3:
-                    Win("Rock crushes lizard.!");
+                    Win("Rock crushes lizard.");
                     break;
                 case 4:
                     Lose("Spock vaporizes rock.");
