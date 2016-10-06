@@ -1,42 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace RPSLS_WPF 
+namespace RPSLS_WPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        string[] Elements = { "Rock", "Paper", "Scissors", "Lizard", "Spock" , ""};
-        int _playerWins = 0;
-        int _computerWins = 0;
-        int _tieGames = 0;
-        int _playerSelection = 5;
-        int _computerSelection = 5;
-        string _result = "";
+        private string[] Elements = { "Rock", "Paper", "Scissors", "Lizard", "Spock", "" };
+        private int _playerWins = 0;
+        private int _computerWins = 0;
+        private int _tieGames = 0;
+        private int _playerSelection = 5;
+        private int _computerSelection = 5;
+        private string _result = "";
+
+        #region Data-Binding
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged(string p)
+
+        /// <summary>
+        /// Updates data-binding when a Property has changed.
+        /// </summary>
+        /// <param name="property"></param>
+        protected virtual void OnPropertyChanged(string property)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
 
-        #region Get/Set
+        #endregion Data-Binding
+
+        #region Properties
+
         public int PlayerWins
         {
             get { return _playerWins; }
@@ -97,8 +93,8 @@ namespace RPSLS_WPF
             get { return _result; }
             set { _result = value; OnPropertyChanged("Result"); }
         }
-        #endregion
 
+        #endregion Properties
 
         /// <summary>
         /// Generates a random number between min and max (inclusive).
@@ -119,6 +115,7 @@ namespace RPSLS_WPF
         }
 
         #region Game Results
+
         private void Win(string result)
         {
             PlayerWins += 1;
@@ -136,9 +133,11 @@ namespace RPSLS_WPF
             TieGames += 1;
             Result = "Tie game.";
         }
-        #endregion
+
+        #endregion Game Results
 
         #region Gameplay
+
         private void Play(int elementNumber)
         {
             PlayerSelection = elementNumber;
@@ -149,15 +148,19 @@ namespace RPSLS_WPF
                 case 0:
                     Rock();
                     break;
+
                 case 1:
                     Paper();
                     break;
+
                 case 2:
                     Scissors();
                     break;
+
                 case 3:
                     Lizard();
                     break;
+
                 case 4:
                     Spock();
                     break;
@@ -171,15 +174,19 @@ namespace RPSLS_WPF
                 case 0:
                     Tie();
                     break;
+
                 case 1:
                     Lose("Paper covers rock.");
                     break;
+
                 case 2:
                     Win("Rock smashes scissors.");
                     break;
+
                 case 3:
                     Win("Rock crushes lizard.");
                     break;
+
                 case 4:
                     Lose("Spock vaporizes rock.");
                     break;
@@ -193,15 +200,19 @@ namespace RPSLS_WPF
                 case 0:
                     Win("Paper covers rock.");
                     break;
+
                 case 1:
                     Tie();
                     break;
+
                 case 2:
                     Lose("Scissors cuts paper.");
                     break;
+
                 case 3:
                     Lose("Lizard eats paper.");
                     break;
+
                 case 4:
                     Win("Paper disproves Spock.");
                     break;
@@ -215,15 +226,19 @@ namespace RPSLS_WPF
                 case 0:
                     Lose("Rock smashes scissors.");
                     break;
+
                 case 1:
                     Win("Scissors cuts paper.");
                     break;
+
                 case 2:
                     Tie();
                     break;
+
                 case 3:
                     Win("Scissors decapitate lizard.");
                     break;
+
                 case 4:
                     Lose("Spock smashes scissors.");
                     break;
@@ -237,15 +252,19 @@ namespace RPSLS_WPF
                 case 0:
                     Lose("Rock crushes lizard.");
                     break;
+
                 case 1:
                     Win("Lizard eats paper.");
                     break;
+
                 case 2:
                     Lose("Scissors decapitate lizard.");
                     break;
+
                 case 3:
                     Tie();
                     break;
+
                 case 4:
                     Win("Lizard poisons Spock.");
                     break;
@@ -259,23 +278,29 @@ namespace RPSLS_WPF
                 case 0:
                     Win("Spock vaporizes rock.");
                     break;
+
                 case 1:
                     Lose("Paper disproves Spock.");
                     break;
+
                 case 2:
                     Win("Spock smashes scissors.");
                     break;
+
                 case 3:
                     Lose("Lizard poisons Spock.");
                     break;
+
                 case 4:
                     Tie();
                     break;
             }
         }
-        #endregion
+
+        #endregion Gameplay
 
         #region Button-Click Methods
+
         private void btnRock_Click(object sender, RoutedEventArgs e)
         {
             Play(0);
@@ -300,8 +325,10 @@ namespace RPSLS_WPF
         {
             Play(4);
         }
-        #endregion
 
+        #endregion Button-Click Methods
+
+        #region Form-Manipulation Methods
 
         public MainWindow()
         {
@@ -312,16 +339,7 @@ namespace RPSLS_WPF
         {
             DataContext = this;
         }
-    }
 
-    public static class ThreadSafeRandom
-    {
-        [ThreadStatic]
-        private static Random Local;
-
-        internal static Random ThisThreadsRandom
-        {
-            get { return Local ?? (Local = new Random(unchecked(Environment.TickCount * 31 + Thread.CurrentThread.ManagedThreadId))); }
-        }
+        #endregion Form-Manipulation Methods
     }
 }
