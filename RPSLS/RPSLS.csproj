@@ -102,6 +102,13 @@
   <ItemGroup>
     <Resource Include="RPSLS.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Lizard.png" />
+    <Resource Include="Images\Paper.png" />
+    <Resource Include="Images\Rock.png" />
+    <Resource Include="Images\Scissors.png" />
+    <Resource Include="Images\Spock.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
