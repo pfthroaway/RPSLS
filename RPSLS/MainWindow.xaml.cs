@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace RPSLS_WPF
+namespace RPSLS
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

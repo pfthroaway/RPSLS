@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace RPSLS_WPF
+namespace RPSLS
 {
     /// <summary>
     /// Retrieves a thread-safe random number.
