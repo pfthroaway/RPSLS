@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RPSLS"
         mc:Ignorable="d"
-        Title="Rock Paper Scissors Lizard Spock"  WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" ResizeMode="NoResize" SizeToContent="WidthAndHeight" FontFamily="Segoe UI Semibold" FontSize="20" Icon="RPSLS.ico">
+        Title="Rock Paper Scissors Lizard Spock"  WindowStartupLocation="CenterScreen" Loaded="windowRPSLS_Loaded" ResizeMode="NoResize" SizeToContent="WidthAndHeight" FontFamily="Segoe UI Semibold" FontSize="20" Icon="RPSLS.ico" KeyDown="windowRPSLS_KeyDown">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
