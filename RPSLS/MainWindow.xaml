@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RPSLS"
         mc:Ignorable="d"
-        Title="Rock Paper Scissors Lizard Spock"  WindowStartupLocation="CenterScreen" Loaded="windowRPSLS_Loaded" ResizeMode="NoResize" SizeToContent="WidthAndHeight" FontFamily="Segoe UI Semibold" FontSize="20" Icon="RPSLS.ico" KeyDown="windowRPSLS_KeyDown">
+        Title="Rock Paper Scissors Lizard Spock" WindowStartupLocation="CenterScreen" Loaded="windowRPSLS_Loaded" ResizeMode="NoResize" SizeToContent="WidthAndHeight" FontFamily="Segoe UI Semibold" FontSize="20" Icon="RPSLS.ico" KeyDown="windowRPSLS_KeyDown">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -23,23 +23,24 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=TieGamesString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=ComputerWinsString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=PlayerSelectionString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Button x:Name="btnSimulation" Grid.Row="1" Grid.Column="1" Opacity="0" Click="btnSimulation_Click" />
         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=ComputerSelectionString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <TextBlock Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Path=Result, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <Button x:Name="btnRock" Grid.Column="0" Grid.Row="3"  Click="btnRock_Click" Width="192" Height="192" Margin="5">
+        <Button x:Name="btnRock" Grid.Column="0" Grid.Row="3"  Click="btnRock_Click" Width="192" Height="192" Margin="50,0,0,0">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="Images\Rock.png" />
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Grid.Row="3" Grid.Column="1" Click="btnPaper_Click" Width="192" Height="192"  Margin="5">
+        <Button Grid.Row="3" Grid.Column="1" Click="btnPaper_Click" Width="192" Height="192"  Margin="25,0">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="Images\Paper.png" />
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Grid.Row="3" Grid.Column="2" Click="btnScissors_Click" Width="192" Height="192"  Margin="5">
+        <Button Grid.Row="3" Grid.Column="2" Click="btnScissors_Click" Width="192" Height="192"  Margin="0,0,50,0">
             <Button.Template>
                 <ControlTemplate>
                     <Image Source="Images\Scissors.png" />

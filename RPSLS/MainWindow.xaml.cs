@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,14 +10,13 @@ namespace RPSLS
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private enum Element { Rock, Paper, Scissors, Lizard, Spock }
+        public enum Element { Rock, Paper, Scissors, Lizard, Spock }
 
-        private string[] Elements = { "", "Rock", "Paper", "Scissors", "Lizard", "Spock" };
         private int _playerWins = 0;
         private int _computerWins = 0;
         private int _tieGames = 0;
-        private int _playerSelection = 0;
-        private int _computerSelection = 0;
+        private Element? _playerSelection;
+        private Element? _computerSelection;
         private string _result = "";
 
         #region Data-Binding
@@ -58,14 +58,14 @@ namespace RPSLS
         }
 
         /// <summary>The player's current selection.</summary>
-        public int PlayerSelection
+        public Element? PlayerSelection
         {
             get { return _playerSelection; }
             set { _playerSelection = value; OnPropertyChanged("PlayerSelectionString"); }
         }
 
         /// <summary>The computer's current selection.</summary>
-        public int ComputerSelection
+        public Element? ComputerSelection
         {
             get { return _computerSelection; }
             set { _computerSelection = value; OnPropertyChanged("ComputerSelectionString"); }
@@ -85,31 +85,31 @@ namespace RPSLS
         /// <summary>Games the player has won with preceding text.</summary>
         public string PlayerWinsString
         {
-            get { return "Player Wins: " + _playerWins; }
+            get { return "Player Wins: " + PlayerWins.ToString("N0"); }
         }
 
         /// <summary>Games the computer has won with preceding text.</summary>
         public string ComputerWinsString
         {
-            get { return "Computer Wins: " + _computerWins; }
+            get { return "Computer Wins: " + ComputerWins.ToString("N0"); }
         }
 
         /// <summary>Games that resulted in a tie with preceding text.</summary>
         public string TieGamesString
         {
-            get { return "Tie Games: " + _tieGames; }
+            get { return "Tie Games: " + TieGames.ToString("N0"); }
         }
 
         /// <summary>The player's current selection.</summary>
         public string PlayerSelectionString
         {
-            get { return Elements[_playerSelection]; }
+            get { return PlayerSelection.ToString(); }
         }
 
         /// <summary>The computer's current selection.</summary>
         public string ComputerSelectionString
         {
-            get { return Elements[_computerSelection]; }
+            get { return ComputerSelection.ToString(); }
         }
 
         #endregion Helper Properties
@@ -160,34 +160,56 @@ namespace RPSLS
         #region Gameplay
 
         /// <summary>Starts a new round.</summary>
-        /// <param name="elementNumber">Element the player has selected.</param>
-        private void Play(int elementNumber)
+        /// <param name="selectedElement">Element the player has selected.</param>
+        private void Play(Element selectedElement)
         {
-            PlayerSelection = elementNumber;
-            ComputerSelection = GenerateRandomNumber(1, 5);
+            PlayerSelection = selectedElement;
+            ComputerSelection = (Element)GenerateRandomNumber(0, 4);
 
             switch (PlayerSelection)
             {
-                case 1:
+                case Element.Rock:
                     Rock();
                     break;
 
-                case 2:
+                case Element.Paper:
                     Paper();
                     break;
 
-                case 3:
+                case Element.Scissors:
                     Scissors();
                     break;
 
-                case 4:
+                case Element.Lizard:
                     Lizard();
                     break;
 
-                case 5:
+                case Element.Spock:
                     Spock();
                     break;
             }
+        }
+
+        /// <summary>Simulates an amount of games.</summary>
+        /// <param name="games">Number of games to simulate</param>
+        /// <param name="resetScore">Reset current score?</param>
+        internal async void Simulate(int games, bool resetScore)
+        {
+            if (resetScore)
+                ResetScore();
+            await Task.Factory.StartNew(() =>
+            {
+                for (int i = 0; i < games; i++)
+                    Play((Element)GenerateRandomNumber(0, 4));
+            });
+        }
+
+        /// <summary>Resets all wins/losses/ties.</summary>
+        private void ResetScore()
+        {
+            PlayerWins = 0;
+            ComputerWins = 0;
+            TieGames = 0;
         }
 
         /// <summary>The player selects Rock.</summary>
@@ -195,23 +217,23 @@ namespace RPSLS
         {
             switch (ComputerSelection)
             {
-                case 1:
+                case Element.Rock:
                     Tie();
                     break;
 
-                case 2:
+                case Element.Paper:
                     Lose("Paper covers rock.");
                     break;
 
-                case 3:
+                case Element.Scissors:
                     Win("Rock smashes scissors.");
                     break;
 
-                case 4:
+                case Element.Lizard:
                     Win("Rock crushes lizard.");
                     break;
 
-                case 5:
+                case Element.Spock:
                     Lose("Spock vaporizes rock.");
                     break;
             }
@@ -222,23 +244,23 @@ namespace RPSLS
         {
             switch (ComputerSelection)
             {
-                case 1:
+                case Element.Rock:
                     Win("Paper covers rock.");
                     break;
 
-                case 2:
+                case Element.Paper:
                     Tie();
                     break;
 
-                case 3:
+                case Element.Scissors:
                     Lose("Scissors cuts paper.");
                     break;
 
-                case 4:
+                case Element.Lizard:
                     Lose("Lizard eats paper.");
                     break;
 
-                case 5:
+                case Element.Spock:
                     Win("Paper disproves Spock.");
                     break;
             }
@@ -249,23 +271,23 @@ namespace RPSLS
         {
             switch (ComputerSelection)
             {
-                case 1:
+                case Element.Rock:
                     Lose("Rock smashes scissors.");
                     break;
 
-                case 2:
+                case Element.Paper:
                     Win("Scissors cuts paper.");
                     break;
 
-                case 3:
+                case Element.Scissors:
                     Tie();
                     break;
 
-                case 4:
+                case Element.Lizard:
                     Win("Scissors decapitate lizard.");
                     break;
 
-                case 5:
+                case Element.Spock:
                     Lose("Spock smashes scissors.");
                     break;
             }
@@ -276,23 +298,23 @@ namespace RPSLS
         {
             switch (ComputerSelection)
             {
-                case 1:
+                case Element.Rock:
                     Lose("Rock crushes lizard.");
                     break;
 
-                case 2:
+                case Element.Paper:
                     Win("Lizard eats paper.");
                     break;
 
-                case 3:
+                case Element.Scissors:
                     Lose("Scissors decapitate lizard.");
                     break;
 
-                case 4:
+                case Element.Lizard:
                     Tie();
                     break;
 
-                case 5:
+                case Element.Spock:
                     Win("Lizard poisons Spock.");
                     break;
             }
@@ -303,23 +325,23 @@ namespace RPSLS
         {
             switch (ComputerSelection)
             {
-                case 1:
+                case Element.Rock:
                     Win("Spock vaporizes rock.");
                     break;
 
-                case 2:
+                case Element.Paper:
                     Lose("Paper disproves Spock.");
                     break;
 
-                case 3:
+                case Element.Scissors:
                     Win("Spock smashes scissors.");
                     break;
 
-                case 4:
+                case Element.Lizard:
                     Lose("Lizard poisons Spock.");
                     break;
 
-                case 5:
+                case Element.Spock:
                     Tie();
                     break;
             }
@@ -331,27 +353,35 @@ namespace RPSLS
 
         private void btnRock_Click(object sender, RoutedEventArgs e)
         {
-            Play(1);
+            Play(Element.Rock);
         }
 
         private void btnPaper_Click(object sender, RoutedEventArgs e)
         {
-            Play(2);
+            Play(Element.Paper);
         }
 
         private void btnScissors_Click(object sender, RoutedEventArgs e)
         {
-            Play(3);
+            Play(Element.Scissors);
         }
 
         private void btnLizard_Click(object sender, RoutedEventArgs e)
         {
-            Play(4);
+            Play(Element.Lizard);
         }
 
         private void btnSpock_Click(object sender, RoutedEventArgs e)
         {
-            Play(5);
+            Play(Element.Spock);
+        }
+
+        private void btnSimulation_Click(object sender, RoutedEventArgs e)
+        {
+            SimulationWindow simulationWindow = new SimulationWindow();
+            simulationWindow.RefToMainWindow = this;
+            simulationWindow.Show();
+            this.Visibility = Visibility.Hidden;
         }
 
         #endregion Button-Click Methods
@@ -376,27 +406,31 @@ namespace RPSLS
             {
                 case Key.D1:
                 case Key.NumPad1:
-                    Play(1);
+                    Play(Element.Rock);
                     break;
 
                 case Key.D2:
                 case Key.NumPad2:
-                    Play(2);
+                    Play(Element.Paper);
                     break;
 
                 case Key.D3:
                 case Key.NumPad3:
-                    Play(3);
+                    Play(Element.Scissors);
                     break;
 
                 case Key.D4:
                 case Key.NumPad4:
-                    Play(4);
+                    Play(Element.Lizard);
                     break;
 
                 case Key.D5:
                 case Key.NumPad5:
-                    Play(5);
+                    Play(Element.Spock);
+                    break;
+
+                case Key.Escape:
+                    this.Close();
                     break;
             }
         }
@@ -404,3 +438,5 @@ namespace RPSLS
         #endregion Form-Manipulation Methods
     }
 }
+
+//TODO - HIDDEN DEVELOPER STUFF - ENUMS
