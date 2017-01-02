@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Extensions;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -8,13 +9,13 @@ namespace RPSLS
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : INotifyPropertyChanged
     {
         public enum Element { Rock, Paper, Scissors, Lizard, Spock }
 
-        private int _playerWins = 0;
-        private int _computerWins = 0;
-        private int _tieGames = 0;
+        private int _playerWins;
+        private int _computerWins;
+        private int _tieGames;
         private Element? _playerSelection;
         private Element? _computerSelection;
         private string _result = "";
@@ -83,52 +84,21 @@ namespace RPSLS
         #region Helper Properties
 
         /// <summary>Games the player has won with preceding text.</summary>
-        public string PlayerWinsString
-        {
-            get { return "Player Wins: " + PlayerWins.ToString("N0"); }
-        }
+        public string PlayerWinsString => "Player Wins: " + PlayerWins.ToString("N0");
 
         /// <summary>Games the computer has won with preceding text.</summary>
-        public string ComputerWinsString
-        {
-            get { return "Computer Wins: " + ComputerWins.ToString("N0"); }
-        }
+        public string ComputerWinsString => "Computer Wins: " + ComputerWins.ToString("N0");
 
         /// <summary>Games that resulted in a tie with preceding text.</summary>
-        public string TieGamesString
-        {
-            get { return "Tie Games: " + TieGames.ToString("N0"); }
-        }
+        public string TieGamesString => "Tie Games: " + TieGames.ToString("N0");
 
         /// <summary>The player's current selection.</summary>
-        public string PlayerSelectionString
-        {
-            get { return PlayerSelection.ToString(); }
-        }
+        public string PlayerSelectionString => PlayerSelection.ToString();
 
         /// <summary>The computer's current selection.</summary>
-        public string ComputerSelectionString
-        {
-            get { return ComputerSelection.ToString(); }
-        }
+        public string ComputerSelectionString => ComputerSelection.ToString();
 
         #endregion Helper Properties
-
-        /// <summary>Generates a random number between min and max (inclusive).</summary>
-        /// <param name="min">Inclusive minimum number</param>
-        /// <param name="max">Inclusive maximum number</param>
-        /// <returns>Returns randomly generated integer between min and max.</returns>
-        internal int GenerateRandomNumber(int min, int max)
-        {
-            int result;
-
-            if (min < max)
-                result = ThreadSafeRandom.ThisThreadsRandom.Next(min, max + 1);
-            else
-                result = ThreadSafeRandom.ThisThreadsRandom.Next(max, min + 1);
-
-            return result;
-        }
 
         #region Game Results
 
@@ -164,7 +134,7 @@ namespace RPSLS
         private void Play(Element selectedElement)
         {
             PlayerSelection = selectedElement;
-            ComputerSelection = (Element)GenerateRandomNumber(0, 4);
+            ComputerSelection = (Element)Functions.GenerateRandomNumber(0, 4);
 
             switch (PlayerSelection)
             {
@@ -200,7 +170,7 @@ namespace RPSLS
             await Task.Factory.StartNew(() =>
             {
                 for (int i = 0; i < games; i++)
-                    Play((Element)GenerateRandomNumber(0, 4));
+                    Play((Element)Functions.GenerateRandomNumber(0, 4));
             });
         }
 
@@ -378,8 +348,7 @@ namespace RPSLS
 
         private void btnSimulation_Click(object sender, RoutedEventArgs e)
         {
-            SimulationWindow simulationWindow = new SimulationWindow();
-            simulationWindow.RefToMainWindow = this;
+            SimulationWindow simulationWindow = new SimulationWindow { RefToMainWindow = this };
             simulationWindow.Show();
             this.Visibility = Visibility.Hidden;
         }
@@ -391,10 +360,6 @@ namespace RPSLS
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void windowRPSLS_Loaded(object sender, RoutedEventArgs e)
-        {
             DataContext = this;
         }
 
@@ -438,5 +403,3 @@ namespace RPSLS
         #endregion Form-Manipulation Methods
     }
 }
-
-//TODO - HIDDEN DEVELOPER STUFF - ENUMS
