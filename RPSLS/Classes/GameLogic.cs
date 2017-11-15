@@ -1,37 +1,24 @@
 ﻿using Extensions;
+using RPSLS.Enums;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
-namespace RPSLS
+namespace RPSLS.Classes
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : INotifyPropertyChanged
+    /// <summary>Represents the logic of the game.</summary>
+    internal class GameLogic : INotifyPropertyChanged
     {
-        public enum Element { Rock, Paper, Scissors, Lizard, Spock }
-
-        private int _playerWins;
-        private int _computerWins;
-        private int _tieGames;
-        private Element? _playerSelection;
-        private Element? _computerSelection;
+        private int _playerWins, _computerWins, _tieGames;
+        private Element? _playerSelection, _computerSelection;
         private string _result = "";
 
         #region Data-Binding
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
-        /// Updates data-binding when a Property has changed.
-        /// </summary>
-        /// <param name="property"></param>
-        protected virtual void OnPropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
+        /// <summary>Updates data-binding when a Property has changed.</summary>
+        /// <param name="property">Name of Property</param>
+        public void OnPropertyChanged(string property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
 
         #endregion Data-Binding
 
@@ -40,42 +27,42 @@ namespace RPSLS
         /// <summary>Games the player has won.</summary>
         public int PlayerWins
         {
-            get { return _playerWins; }
+            get => _playerWins;
             set { _playerWins = value; OnPropertyChanged("PlayerWinsString"); }
         }
 
         /// <summary>Games the computer has won.</summary>
         public int ComputerWins
         {
-            get { return _computerWins; }
+            get => _computerWins;
             set { _computerWins = value; OnPropertyChanged("ComputerWinsString"); }
         }
 
         /// <summary>Games that resulted in a tie.</summary>
         public int TieGames
         {
-            get { return _tieGames; }
+            get => _tieGames;
             set { _tieGames = value; OnPropertyChanged("TieGamesString"); }
         }
 
         /// <summary>The player's current selection.</summary>
         public Element? PlayerSelection
         {
-            get { return _playerSelection; }
+            get => _playerSelection;
             set { _playerSelection = value; OnPropertyChanged("PlayerSelectionString"); }
         }
 
         /// <summary>The computer's current selection.</summary>
         public Element? ComputerSelection
         {
-            get { return _computerSelection; }
+            get => _computerSelection;
             set { _computerSelection = value; OnPropertyChanged("ComputerSelectionString"); }
         }
 
         /// <summary>The result of the current game.</summary>
         public string Result
         {
-            get { return _result; }
+            get => _result;
             set { _result = value; OnPropertyChanged("Result"); }
         }
 
@@ -131,7 +118,7 @@ namespace RPSLS
 
         /// <summary>Starts a new round.</summary>
         /// <param name="selectedElement">Element the player has selected.</param>
-        private void Play(Element selectedElement)
+        internal void Play(Element selectedElement)
         {
             PlayerSelection = selectedElement;
             ComputerSelection = (Element)Functions.GenerateRandomNumber(0, 4);
@@ -318,88 +305,5 @@ namespace RPSLS
         }
 
         #endregion Gameplay
-
-        #region Button-Click Methods
-
-        private void btnRock_Click(object sender, RoutedEventArgs e)
-        {
-            Play(Element.Rock);
-        }
-
-        private void btnPaper_Click(object sender, RoutedEventArgs e)
-        {
-            Play(Element.Paper);
-        }
-
-        private void btnScissors_Click(object sender, RoutedEventArgs e)
-        {
-            Play(Element.Scissors);
-        }
-
-        private void btnLizard_Click(object sender, RoutedEventArgs e)
-        {
-            Play(Element.Lizard);
-        }
-
-        private void btnSpock_Click(object sender, RoutedEventArgs e)
-        {
-            Play(Element.Spock);
-        }
-
-        private void btnSimulation_Click(object sender, RoutedEventArgs e)
-        {
-            SimulationWindow simulationWindow = new SimulationWindow { RefToMainWindow = this };
-            simulationWindow.Show();
-            this.Visibility = Visibility.Hidden;
-        }
-
-        #endregion Button-Click Methods
-
-        #region Form-Manipulation Methods
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            DataContext = this;
-        }
-
-        private void windowRPSLS_KeyDown(object sender, KeyEventArgs e)
-        {
-            Key k = e.Key;
-
-            switch (k)
-            {
-                case Key.D1:
-                case Key.NumPad1:
-                    Play(Element.Rock);
-                    break;
-
-                case Key.D2:
-                case Key.NumPad2:
-                    Play(Element.Paper);
-                    break;
-
-                case Key.D3:
-                case Key.NumPad3:
-                    Play(Element.Scissors);
-                    break;
-
-                case Key.D4:
-                case Key.NumPad4:
-                    Play(Element.Lizard);
-                    break;
-
-                case Key.D5:
-                case Key.NumPad5:
-                    Play(Element.Spock);
-                    break;
-
-                case Key.Escape:
-                    this.Close();
-                    break;
-            }
-        }
-
-        #endregion Form-Manipulation Methods
     }
 }

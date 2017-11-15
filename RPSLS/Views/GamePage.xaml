@@ -1,11 +1,14 @@
-﻿<Window x:Name="windowRPSLS" x:Class="RPSLS.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="Rock Paper Scissors Lizard Spock" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" SizeToContent="WidthAndHeight" FontFamily="Segoe UI Semibold" FontSize="20" Icon="RPSLS.ico" KeyDown="windowRPSLS_KeyDown">
-    <Grid Margin="10">
+﻿<Page x:Class="RPSLS.Views.GamePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" Style="{StaticResource PageStyle}"
+      Title="Rock Paper Scissors Lizard Spock"
+      FontSize="20"
+      Loaded="GamePage_OnLoaded"
+      KeyDown="WindowRPSLS_KeyDown">
+    <Grid x:Name="Grid"  Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
@@ -22,43 +25,43 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=TieGamesString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Path=ComputerWinsString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=PlayerSelectionString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <Button x:Name="btnSimulation" Grid.Row="1" Grid.Column="1" Opacity="0" Click="btnSimulation_Click" />
+        <Button x:Name="BtnSimulation" Grid.Row="1" Grid.Column="1" Opacity="0" Click="BtnSimulation_Click" />
         <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=ComputerSelectionString, Mode=OneWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Text="{Binding Path=Result, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <Button x:Name="btnRock" Grid.Column="0" Grid.Row="3"  Click="btnRock_Click" Width="192" Height="192" Margin="50,0,0,0">
+        <Button x:Name="BtnRock" Grid.Column="0" Grid.Row="3" Click="BtnRock_Click" Width="192" Height="192" Margin="50,0,0,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="Images\Rock.png" />
+                    <Image Source="..\Images\Rock.png" />
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Grid.Row="3" Grid.Column="1" Click="btnPaper_Click" Width="192" Height="192"  Margin="25,0">
+        <Button Grid.Row="3" Grid.Column="1" Click="BtnPaper_Click" Width="192" Height="192" Margin="25,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="Images\Paper.png" />
+                    <Image Source="..\Images\Paper.png" />
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Grid.Row="3" Grid.Column="2" Click="btnScissors_Click" Width="192" Height="192"  Margin="0,0,50,0">
+        <Button Grid.Row="3" Grid.Column="2" Click="BtnScissors_Click" Width="192" Height="192" Margin="0,0,50,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="Images\Scissors.png" />
+                    <Image Source="..\Images\Scissors.png" />
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Click="btnLizard_Click" Width="192" Height="192"  Margin="5,5,50,0">
+        <Button Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Click="BtnLizard_Click" Width="192" Height="192" Margin="5,5,50,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="Images\Lizard.png" />
+                    <Image Source="..\Images\Lizard.png" />
                 </ControlTemplate>
             </Button.Template>
         </Button>
-        <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Click="btnSpock_Click" Width="192" Height="192"  Margin="50,5,5,0">
+        <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Click="BtnSpock_Click" Width="192" Height="192" Margin="50,5,5,0">
             <Button.Template>
                 <ControlTemplate>
-                    <Image Source="Images\Spock.png" />
+                    <Image Source="..\Images\Spock.png" />
                 </ControlTemplate>
             </Button.Template>
         </Button>
     </Grid>
-</Window>
+</Page>

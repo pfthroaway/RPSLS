@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace RPSLS
+﻿namespace RPSLS
 {
     /// <summary>
     /// Interaction logic for App.xaml
