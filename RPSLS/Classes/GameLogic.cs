@@ -93,7 +93,7 @@ namespace RPSLS.Classes
         /// <param name="result">Text to be displayed</param>
         private void Win(string result)
         {
-            PlayerWins += 1;
+            PlayerWins++;
             Result = result + " You win!";
         }
 
@@ -101,14 +101,14 @@ namespace RPSLS.Classes
         /// <param name="result">Text to be displayed</param>
         private void Lose(string result)
         {
-            ComputerWins += 1;
+            ComputerWins++;
             Result = result + " You lose.";
         }
 
         /// <summary>The game resulted in tie.</summary>
         private void Tie()
         {
-            TieGames += 1;
+            TieGames++;
             Result = "Tie game.";
         }
 

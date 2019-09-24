@@ -6,9 +6,8 @@
       mc:Ignorable="d"
       Style="{StaticResource PageStyle}"
       Title="RPSLS Simulator"
-      FontSize="20"
-      Loaded="SimulationWindow_OnLoaded">
-    <Grid x:Name="Grid" Margin="10">
+      FontSize="20">
+    <Grid x:Name="Grid" Margin="100">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />

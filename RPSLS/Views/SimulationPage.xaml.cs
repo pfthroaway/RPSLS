@@ -21,7 +21,7 @@ namespace RPSLS.Views
 
             if (games > 0)
             {
-                await Task.Factory.StartNew(() => { GameState.GameLogic.Simulate(games, reset); });
+                await Task.Factory.StartNew(() => GameState.GameLogic.Simulate(games, reset));
                 Close();
             }
             else
@@ -54,8 +54,6 @@ namespace RPSLS.Views
         }
 
         private void TxtSimulator_GotFocus(object sender, RoutedEventArgs e) => Functions.TextBoxGotFocus(sender);
-
-        private void SimulationWindow_OnLoaded(object sender, RoutedEventArgs e) => GameState.CalculateScale(Grid);
 
         #endregion Page-Manipulation Methods
     }

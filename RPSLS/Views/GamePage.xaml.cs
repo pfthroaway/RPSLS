@@ -36,9 +36,7 @@ namespace RPSLS.Views
 
         private void WindowRPSLS_KeyDown(object sender, KeyEventArgs e)
         {
-            Key k = e.Key;
-
-            switch (k)
+            switch (e.Key)
             {
                 case Key.D1:
                 case Key.NumPad1:
@@ -71,11 +69,7 @@ namespace RPSLS.Views
             }
         }
 
-        private void GamePage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            BtnRock.Focus();
-            GameState.CalculateScale(Grid);
-        }
+        private void GamePage_OnLoaded(object sender, RoutedEventArgs e) => BtnRock.Focus();
 
         #endregion Window-Manipulation Methods
     }

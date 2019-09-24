@@ -5,25 +5,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        Style="{StaticResource WindowStyle}"
         Title="{Binding Path=Content.Title, ElementName=MainFrame}"
         Icon="RPSLS.ico"
         WindowState="Maximized">
-    <Frame
+    <Viewbox Stretch="Uniform">
+        <Frame
         x:Name="MainFrame"
         ScrollViewer.VerticalScrollBarVisibility="Auto"
         ScrollViewer.HorizontalScrollBarVisibility="Auto"
         ScrollViewer.CanContentScroll="True"
         NavigationUIVisibility="Hidden"
-        SizeChanged="MainFrame_OnSizeChanged"
-        Source="GamePage.xaml"
-        HorizontalContentAlignment="Stretch"
-        VerticalContentAlignment="Stretch">
-        <Frame.LayoutTransform>
-            <ScaleTransform x:Name="ApplicationScaleTransform"
-                            CenterX="0"
-                            CenterY="0"
-                            ScaleX="{Binding ElementName=WindowMain, Path=ScaleValue}"
-                            ScaleY="{Binding ElementName=WindowMain, Path=ScaleValue}" />
-        </Frame.LayoutTransform>
-    </Frame>
+        Source="GamePage.xaml" />
+    </Viewbox>
 </Window>

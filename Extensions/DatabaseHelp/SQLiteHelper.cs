@@ -8,13 +8,13 @@ using System.Windows;
 namespace Extensions.DatabaseHelp
 {
     /// <summary>Provides an extension into SQLite commands.</summary>
-    public static class SQLite
+    public static class SQLiteHelper
     {
         /// <summary>This method fills a DataSet with data from a table.</summary>
         /// <param name="con">Connection information</param>
         /// <param name="sql">SQL query to be executed</param>
         /// <returns>Returns DataSet with queried results</returns>
-        public static async Task<DataSet> FillDataSet(string con, string sql) => await FillDataSet(con, new SQLiteCommand { CommandText = sql });
+        public static Task<DataSet> FillDataSet(string con, string sql) => FillDataSet(con, new SQLiteCommand { CommandText = sql });
 
         /// <summary>This method fills a DataSet with data from a table.</summary>
         /// <param name="con">Connection information</param>
@@ -32,18 +32,15 @@ namespace Extensions.DatabaseHelp
                     SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
                     da.Fill(ds);
                 }
-                catch (Exception ex)
+                catch (SQLiteException ex)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        new Notification(ex.Message, "Error Filling DataSet", NotificationButtons.OK).ShowDialog();
-                    });
+                    Application.Current.Dispatcher.Invoke(() => new Notification(ex.Message, "Error Filling DataSet", NotificationButton.OK).ShowDialog());
                 }
                 finally
                 {
                     connection.Close();
                 }
-            });
+            }).ConfigureAwait(false);
             return ds;
         }
 
@@ -64,18 +61,15 @@ namespace Extensions.DatabaseHelp
                     SQLiteDataAdapter da = new SQLiteDataAdapter(cmd);
                     da.Fill(ds);
                 }
-                catch (Exception ex)
+                catch (SQLiteException ex)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        new Notification(ex.Message, "Error Filling DataSet", NotificationButtons.OK).ShowDialog();
-                    });
+                    Application.Current.Dispatcher.Invoke(() => new Notification(ex.Message, "Error Filling DataSet", NotificationButton.OK).ShowDialog());
                 }
                 finally
                 {
                     connection.Close();
                 }
-            });
+            }).ConfigureAwait(false);
             return ds;
         }
 
@@ -103,11 +97,11 @@ namespace Extensions.DatabaseHelp
                         }
                         success = true;
                     }
-                    catch (Exception ex)
+                    catch (SQLiteException ex)
                     {
                         Application.Current.Dispatcher.Invoke(() =>
                         {
-                            new Notification(ex.Message, "Error Executing Command", NotificationButtons.OK)
+                            new Notification(ex.Message, "Error Executing Command", NotificationButton.OK)
                                 .ShowDialog();
                         });
                     }
@@ -115,14 +109,14 @@ namespace Extensions.DatabaseHelp
                     {
                         connection.Close();
                     }
-                });
+                }).ConfigureAwait(false);
             }
             else
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     new Notification("Connection string cannot be empty!", "Cannot Connect To Database",
-                        NotificationButtons.OK).ShowDialog();
+                        NotificationButton.OK).ShowDialog();
                 });
             }
             return success;

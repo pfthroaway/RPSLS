@@ -8,7 +8,7 @@
       FontSize="20"
       Loaded="GamePage_OnLoaded"
       KeyDown="WindowRPSLS_KeyDown">
-    <Grid x:Name="Grid"  Margin="10">
+    <Grid x:Name="Grid" Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
